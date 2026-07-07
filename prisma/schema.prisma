@@ -1,0 +1,77 @@
+// prisma/schema.prisma
+// This defines your database tables.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// A single BrickLink order (either a sale you received, or a purchase you made)
+model Order {
+  id            Int      @id @default(autoincrement())
+  blOrderId     Int      @unique // BrickLink's own order id
+  direction     String   // "in" (sale/income) or "out" (purchase/expense)
+  status        String   // e.g. COMPLETED, CANCELLED, PURGED, etc.
+  dateOrdered   DateTime
+  buyerOrSeller String   // buyer name (if "in") or seller name (if "out")
+  currencyCode  String   // e.g. CAD, USD
+  itemTotal     Float    @default(0) // cost.subtotal - value of the items themselves
+  shippingCost  Float    @default(0) // cost.shipping
+  taxAmount     Float    @default(0) // cost.etc1 + cost.etc2 (extra charges/tax)
+  grandTotal    Float    // cost.grand_total - the order total
+  uniqueCount   Int      @default(1) // number of distinct lots in the order
+  countryCode   String?  // buyer's shipping country (for sales/insights) - requires detail fetch
+  detailFetched Boolean  @default(false) // whether we've called the per-order detail endpoint
+  rawJson       String   // full original API response, kept for safety/debugging
+  syncedAt      DateTime @default(now())
+}
+
+// Manual entries for costs BrickLink doesn't know about
+// (packaging, shipping supplies, software, etc.)
+model Expense {
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  description String
+  category    String
+  amount      Float
+  currencyCode String  @default("CAD")
+  createdAt   DateTime @default(now())
+}
+
+// Tracks the last successful sync so the dashboard can show "Last synced: ..."
+model SyncLog {
+  id          Int      @id @default(autoincrement())
+  direction   String   // "in" or "out"
+  syncedAt    DateTime @default(now())
+  ordersFound Int
+}
+
+// Singleton row (id is always 1) holding BrickLink API credentials + store
+// name, entered via the in-app Setup screen instead of a .env file - this
+// is what makes the packaged desktop app self-contained with no manual
+// file editing required.
+model Settings {
+  id             Int    @id @default(1)
+  consumerKey    String @default("")
+  consumerSecret String @default("")
+  tokenValue     String @default("")
+  tokenSecret    String @default("")
+  storeName      String @default("")
+}
+
+// Caches historical exchange rates so we don't re-fetch the same
+// date/currency pair from the Frankfurter API repeatedly.
+model ExchangeRate {
+  id        Int      @id @default(autoincrement())
+  date      String   // "YYYY-MM-DD"
+  fromCurrency String
+  toCurrency   String
+  rate      Float
+  fetchedAt DateTime @default(now())
+
+  @@unique([date, fromCurrency, toCurrency])
+}
