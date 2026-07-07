@@ -1,11 +1,28 @@
-# BrickLink Income & Expense Tracker
+# StudBalance - A BrickLink Income & Expense Tracker
 
-An application that pulls your BrickLink orders (sales + purchases) into a
-database, lets you add manual expenses, view a dashboard with insights and
-charts, and export everything to Excel/XML/CSV/HTML for any date range.
+StudBalance is an application that pulls your BrickLink orders (sales + purchases) into a
+local database, lets you add manual expenses, and displays a dashboard with summary & insights.
+You are able to filter, sort, and view both profits & expenses. 
+
+Essentially, it's a tool for automating your bookkeeping. It adds the sum of your order's item totals,
+subtracts expenses (and optionally, purchases), and gives you an overview of your month to month profits 
+in a neat line graph.
+
+Like BrickLink, it also allows you to export everything to Excel/XML/CSV/HTML for any date range.
 
 ## How To Use
-- Open the standalone StudBalance.exe file 
+- Open the standalone "StudBalance 0.1.0.exe" file
+- Upon your first time running, it will open a popup screen to input your BrickLink API keys (locally stored)
+- You can register for BrickLink API keys at https://www.bricklink.com/v2/api/register_consumer.page
+- (Optional) You can input a store name as well, but this is purely visual.
+
+### Please Note: You must be connected to the internet for it to pull any data from your BrickLink store.
+- Once you have inputted your API keys, you will have access to the main dashboard screen:
+![Main Dashboard](Images/MainDashboard.png)
+
+- Click the green "Sync Now" button to sync all orders from your store.
+- This may take a couple of minutes, it depends on how long your store has been running for.
+- You should now be able to change currency, filter by date range, add expenses, export, and much more!
 
 ## Features
 
@@ -28,7 +45,6 @@ charts, and export everything to Excel/XML/CSV/HTML for any date range.
 - **Export** - Sales, Purchases, Other Expenses, and Summary
   sheets for the selected date range and currency.
 
-## Notes
-
-- 
-
+## FAQ
+### How can I change my Store name and/or API key values?
+- Click the Store Name & API Settings buttons on the top bar. Please note that you agree to wipe all previous stored data to avoid issues.
