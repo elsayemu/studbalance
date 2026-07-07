@@ -17,11 +17,13 @@ Like BrickLink, it also allows you to export everything to Excel/XML/CSV/HTML fo
 - (Optional) You can input a store name as well, but this is purely visual.
 
 ### Please Note: You must be connected to the internet for it to pull any data from your BrickLink store.
-- Once you have inputted your API keys, you will have access to the main dashboard screen:
-![Main Dashboard](Images/MainDashboard.png)
-
+- Once you have inputted your API keys, you will have access to the main dashboard screen
 - Click the green "Sync Now" button to sync all orders from your store.
 - This may take a couple of minutes, it depends on how long your store has been running for.
+![Main Dashboard](Images/MainDashboard.png)
+![Main Dashboard](Images/ExpensesTab.png)
+![Main Dashboard](Images/OrdersTab.png)
+
 - You should now be able to change currency, filter by date range, add expenses, export, and much more!
 
 ## Features
@@ -48,3 +50,6 @@ Like BrickLink, it also allows you to export everything to Excel/XML/CSV/HTML fo
 ## FAQ
 ### How can I change my Store name and/or API key values?
 - Click the Store Name & API Settings buttons on the top bar. Please note that you agree to wipe all previous stored data to avoid issues.
+### How can I wipe all data related to this app and start fresh?
+- Delete this folder "User Account" > AppData > Roaming > StudBalance
+- Startup the App
